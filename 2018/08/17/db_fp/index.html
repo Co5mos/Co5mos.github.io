@@ -86,13 +86,13 @@
 <meta property="og:site_name" content="Friday is my fave &#39;F&#39; word!">
 <meta property="og:description" content="简介在SQL注入攻击中，最重要的是知道应用正在使用的数据库服务器。没有这一信息，就不可能修改查询以注入信息并获取自己所感兴趣的数据。 其中有两条思路，其一是通过报错信息来获取数据库信息。其二是通过不同数据库服务器所使用的SQL方言上的细微差异来判断。 本篇主要介绍第一种。[附简单验证脚本] 举个例子大多数情况下，要了解后台数据库服务器，只需查看一条足够详细的错误消息即可。  例如一个单引号使数据库">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://co5mos.github.io/2018/08/pictures/2321534170702_.pic.jpg">
-<meta property="og:image" content="http://co5mos.github.io/2018/08/pictures/image-20180813223620621.png">
-<meta property="og:updated_time" content="2018-08-17T07:46:08.019Z">
+<meta property="og:image" content="http://co5mos.github.io/2018/08/17/db_fp/2321534170702_.pic.jpg">
+<meta property="og:image" content="http://co5mos.github.io/2018/08/17/db_fp/image-20180813223620621.png">
+<meta property="og:updated_time" content="2018-08-17T08:05:29.837Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库识别">
 <meta name="twitter:description" content="简介在SQL注入攻击中，最重要的是知道应用正在使用的数据库服务器。没有这一信息，就不可能修改查询以注入信息并获取自己所感兴趣的数据。 其中有两条思路，其一是通过报错信息来获取数据库信息。其二是通过不同数据库服务器所使用的SQL方言上的细微差异来判断。 本篇主要介绍第一种。[附简单验证脚本] 举个例子大多数情况下，要了解后台数据库服务器，只需查看一条足够详细的错误消息即可。  例如一个单引号使数据库">
-<meta name="twitter:image" content="http://co5mos.github.io/2018/08/pictures/2321534170702_.pic.jpg">
+<meta name="twitter:image" content="http://co5mos.github.io/2018/08/17/db_fp/2321534170702_.pic.jpg">
 
 
 
@@ -306,10 +306,10 @@
 <p>其中有两条思路，其一是通过报错信息来获取数据库信息。其二是通过不同数据库服务器所使用的SQL方言上的细微差异来判断。</p>
 <p>本篇主要介绍第一种。[附简单验证脚本]</p>
 <h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><p>大多数情况下，要了解后台数据库服务器，只需查看一条足够详细的错误消息即可。</p>
-<p><img src="../../pictures/2321534170702_.pic.jpg" alt=""></p>
+<p><img src="2321534170702_.pic.jpg" alt=""></p>
 <p>例如一个单引号使数据库服务器将单引号后面的字符看做字符串而非SQL代码，会产生一条错误语句。对于Microsoft SQL Server来说，如上图所示。</p>
 <h2 id="再举个例子"><a href="#再举个例子" class="headerlink" title="再举个例子"></a>再举个例子</h2><p>MySQL数据库可能会产生如下报错：</p>
-<p><img src="../../pictures/image-20180813223620621.png" alt=""></p>
+<p><img src="image-20180813223620621.png" alt=""></p>
 <p>这条错误信息同样可以清楚的显示出改数据库类型。</p>
 <p>当然有时，关键信息并非来自数据库服务器本身，而是来自于访问数据库的技术。例如：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pg_query(): Query failed: ERROR: unterminated quoted string at or near "'" at character 69 in /var/www/php/somepge.php on line 20</span><br></pre></td></tr></table></figure>
