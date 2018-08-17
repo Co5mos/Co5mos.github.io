@@ -79,13 +79,20 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Friday is my fave &#39;F&#39; word!">
-<meta property="og:url" content="http://co5mos.github.io/index.html">
+<meta name="description" content="简介在SQL注入攻击中，最重要的是知道应用正在使用的数据库服务器。没有这一信息，就不可能修改查询以注入信息并获取自己所感兴趣的数据。 其中有两条思路，其一是通过报错信息来获取数据库信息。其二是通过不同数据库服务器所使用的SQL方言上的细微差异来判断。 本篇主要介绍第一种。[附简单验证脚本] 举个例子大多数情况下，要了解后台数据库服务器，只需查看一条足够详细的错误消息即可。  例如一个单引号使数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库识别">
+<meta property="og:url" content="http://co5mos.github.io/2018/08/17/db-fp/index.html">
 <meta property="og:site_name" content="Friday is my fave &#39;F&#39; word!">
+<meta property="og:description" content="简介在SQL注入攻击中，最重要的是知道应用正在使用的数据库服务器。没有这一信息，就不可能修改查询以注入信息并获取自己所感兴趣的数据。 其中有两条思路，其一是通过报错信息来获取数据库信息。其二是通过不同数据库服务器所使用的SQL方言上的细微差异来判断。 本篇主要介绍第一种。[附简单验证脚本] 举个例子大多数情况下，要了解后台数据库服务器，只需查看一条足够详细的错误消息即可。  例如一个单引号使数据库">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://co5mos.github.io/2018/08/17/db-fp/2321534170702_.pic.jpg">
+<meta property="og:image" content="http://co5mos.github.io/2018/08/17/db-fp/image-20180813223620621.png">
+<meta property="og:updated_time" content="2018-08-17T08:17:33.932Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Friday is my fave &#39;F&#39; word!">
+<meta name="twitter:title" content="数据库识别">
+<meta name="twitter:description" content="简介在SQL注入攻击中，最重要的是知道应用正在使用的数据库服务器。没有这一信息，就不可能修改查询以注入信息并获取自己所感兴趣的数据。 其中有两条思路，其一是通过报错信息来获取数据库信息。其二是通过不同数据库服务器所使用的SQL方言上的细微差异来判断。 本篇主要介绍第一种。[附简单验证脚本] 举个例子大多数情况下，要了解后台数据库服务器，只需查看一条足够详细的错误消息即可。  例如一个单引号使数据库">
+<meta name="twitter:image" content="http://co5mos.github.io/2018/08/17/db-fp/2321534170702_.pic.jpg">
 
 
 
@@ -115,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://co5mos.github.io/"/>
+  <link rel="canonical" href="http://co5mos.github.io/2018/08/17/db-fp/"/>
 
 
 
 
 
-  <title>Friday is my fave 'F' word!</title>
+  <title>数据库识别 | Friday is my fave 'F' word!</title>
   
 
 
@@ -140,8 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -214,9 +220,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -246,9 +252,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/17/db-fp/" itemprop="url">数据库识别</a></h1>
+          <h1 class="post-title" itemprop="name headline">数据库识别</h1>
         
 
         <div class="post-meta">
@@ -298,9 +302,7 @@
       
 
       
-        
-          
-            <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在SQL注入攻击中，最重要的是知道应用正在使用的数据库服务器。没有这一信息，就不可能修改查询以注入信息并获取自己所感兴趣的数据。</p>
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在SQL注入攻击中，最重要的是知道应用正在使用的数据库服务器。没有这一信息，就不可能修改查询以注入信息并获取自己所感兴趣的数据。</p>
 <p>其中有两条思路，其一是通过报错信息来获取数据库信息。其二是通过不同数据库服务器所使用的SQL方言上的细微差异来判断。</p>
 <p>本篇主要介绍第一种。[附简单验证脚本]</p>
 <h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><p>大多数情况下，要了解后台数据库服务器，只需查看一条足够详细的错误消息即可。</p>
@@ -362,8 +364,6 @@
 <p>至此，SQLMap大致的数据库指纹识别基本确定，当然这只是对于报错注入的一些判断，同样的还有其他注入方式的数据库判断。大家可以阅读一下SQLMap的源码，根据自己的需求添加一些规则使得工具变得更加强大顺手。</p>
 <h2 id="简单验证脚本"><a href="#简单验证脚本" class="headerlink" title="简单验证脚本"></a>简单验证脚本</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入xml中的ElementTree方法，该方法类似于一个</span></span><br><span class="line"><span class="comment"># 轻量级的DOM，具有方便友好的API。代码可用性好，</span></span><br><span class="line"><span class="comment"># 速度快，消耗内存少。</span></span><br><span class="line"><span class="keyword">import</span> xml.etree.ElementTree <span class="keyword">as</span> ET</span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">"user-agent"</span>: <span class="string">"Mozilla/4.0 (compatible; \</span></span><br><span class="line"><span class="string">    MSIE 7.0; Windows NT 5.1; 360SE)"</span>&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">htmlParser</span><span class="params">(url)</span>:</span></span><br><span class="line">    r = requests.get(url, headers=headers)</span><br><span class="line">    html = str(r.content)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 这里直接使用的 SQLMap 中的 errors.xml</span></span><br><span class="line">    <span class="comment"># 规则集，也可以自己对规则集进行补充修改，使之</span></span><br><span class="line">    <span class="comment"># 能够更好的匹配数据库。</span></span><br><span class="line">    tree = ET.parse(<span class="string">'./errors.xml'</span>)</span><br><span class="line">    root = tree.getroot()   <span class="comment"># 获取根节点</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> child <span class="keyword">in</span> root:      <span class="comment"># 获取子节点</span></span><br><span class="line">        <span class="keyword">for</span> sub <span class="keyword">in</span> child:   <span class="comment"># 获取子孙节点</span></span><br><span class="line">            key = sub.attrib[<span class="string">'regexp'</span>]  <span class="comment"># 获取属性</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="comment"># 正则匹配页面中的信息</span></span><br><span class="line">                <span class="comment"># 并打印出匹配后的数据库类型</span></span><br><span class="line">                <span class="keyword">if</span> re.search(key, html) <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">                    print(child.attrib[<span class="string">'value'</span>])</span><br><span class="line">            <span class="keyword">except</span> Exception:</span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    parser = argparse.ArgumentParser(<span class="string">'python %prog '</span> + <span class="string">'-h &lt;manual&gt;'</span>)</span><br><span class="line">    parser.add_argument(<span class="string">'-u'</span>, dest=<span class="string">'tgt_url'</span>,</span><br><span class="line">                        help=<span class="string">'input the target url'</span>)</span><br><span class="line"></span><br><span class="line">    args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">    url = args.tgt_url</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> url:</span><br><span class="line">        <span class="keyword">if</span> re.search(<span class="string">r"\'"</span>, url) <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            url += <span class="string">"'"</span></span><br><span class="line">        htmlParser(url)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
 
-          
-        
       
     </div>
     
@@ -380,131 +380,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://co5mos.github.io/2018/08/17/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cosmos">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Friday is my fave 'F' word!">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/17/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-17T15:03:08+08:00">
-                2018-08-17
-              </time>
+              <a href="/2018/08/17/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h1 id="Hi"><a href="#Hi" class="headerlink" title="Hi"></a>Hi</h1>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -514,10 +411,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -525,6 +423,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -545,8 +447,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -588,6 +499,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#举个例子"><span class="nav-number">2.</span> <span class="nav-text">举个例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#再举个例子"><span class="nav-number">3.</span> <span class="nav-text">再举个例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取标志信息"><span class="nav-number">4.</span> <span class="nav-text">获取标志信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单分析一下SQLMap是如何进行数据库识别的"><span class="nav-number">5.</span> <span class="nav-text">简单分析一下SQLMap是如何进行数据库识别的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单验证脚本"><span class="nav-number">6.</span> <span class="nav-text">简单验证脚本</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -721,6 +648,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
