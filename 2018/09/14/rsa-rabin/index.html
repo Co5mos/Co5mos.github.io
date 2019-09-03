@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="加解密," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="忙忙忙，盲盲盲，忙是为了自己的理想还是为了不让别人失望。  基本原理Rabin加密算法简介: Rabin算法是一种基于模平方和模平方根的非对称加密算法. 称a为x的算数平方, 称x为a的算数平方根 $$a=x^2⇔x=\sqrt[2]{x}$$ 称a为x模m时的平方, 称x为a模m时的平方根 $$a≡x^2 mod m⇔x≡\sqrt[2]{x} mod m$$">
+<meta name="keywords" content="加解密">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RSA衍生算法—RABIN算法">
+<meta property="og:url" content="https://co5mos.github.io/2018/09/14/rsa-rabin/index.html">
+<meta property="og:site_name" content="犰狳不求余">
+<meta property="og:description" content="忙忙忙，盲盲盲，忙是为了自己的理想还是为了不让别人失望。  基本原理Rabin加密算法简介: Rabin算法是一种基于模平方和模平方根的非对称加密算法. 称a为x的算数平方, 称x为a的算数平方根 $$a=x^2⇔x=\sqrt[2]{x}$$ 称a为x模m时的平方, 称x为a模m时的平方根 $$a≡x^2 mod m⇔x≡\sqrt[2]{x} mod m$$">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://co5mos.github.io/2018/09/14/rsa-rabin/1.png">
+<meta property="og:image" content="https://co5mos.github.io/2018/09/14/rsa-rabin/2.png">
+<meta property="og:image" content="https://co5mos.github.io/2018/09/14/rsa-rabin/3.png">
+<meta property="og:image" content="https://co5mos.github.io/2018/09/14/rsa-rabin/4.png">
+<meta property="og:updated_time" content="2019-09-03T14:32:11.604Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RSA衍生算法—RABIN算法">
+<meta name="twitter:description" content="忙忙忙，盲盲盲，忙是为了自己的理想还是为了不让别人失望。  基本原理Rabin加密算法简介: Rabin算法是一种基于模平方和模平方根的非对称加密算法. 称a为x的算数平方, 称x为a的算数平方根 $$a=x^2⇔x=\sqrt[2]{x}$$ 称a为x模m时的平方, 称x为a模m时的平方根 $$a≡x^2 mod m⇔x≡\sqrt[2]{x} mod m$$">
+<meta name="twitter:image" content="https://co5mos.github.io/2018/09/14/rsa-rabin/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://co5mos.github.io/2018/09/14/rsa-rabin/"/>
+
+
+
+
+
+  <title>RSA衍生算法—RABIN算法 | 犰狳不求余</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">犰狳不求余</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://co5mos.github.io/2018/09/14/rsa-rabin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cosmos">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="犰狳不求余">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RSA衍生算法—RABIN算法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-14T22:06:19+08:00">
+                2018-09-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数学之美/" itemprop="url" rel="index">
+                    <span itemprop="name">数学之美</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
+<blockquote>
+<p>忙忙忙，盲盲盲，忙是为了自己的理想还是为了不让别人失望。</p>
+</blockquote>
+<h1 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h1><p>Rabin加密算法简介:</p>
+<p>Rabin算法是一种基于模平方和模平方根的非对称加密算法.</p>
+<p>称a为x的算数平方, 称x为a的算数平方根</p>
+<p>$$a=x^2⇔x=\sqrt[2]{x}$$</p>
+<p>称a为x模m时的平方, 称x为a模m时的平方根</p>
+<p>$$a≡x^2 mod m⇔x≡\sqrt[2]{x} mod m$$</p>
+<a id="more"></a>
+<p>称私钥p、q为两素数, 公钥 \(n=p×q\). 对明文m和密文c, 定义以下加密过程(公钥加密过程):</p>
+<p>$$c_i=m_i^2 mod n$$</p>
+<p>对应的解密过程相当于求解以下的同余方程组：</p>
+<p>$$m_i^2≡c_i mod n$$</p>
+<p>根据中国剩余定理，同余方程有解当且仅当模互素，因此上述同余方程不可解(公钥无法解密公钥加密后的密文)。</p>
+<p>但使用私钥p、q，可以通过以下方式得到明文：</p>
+<ol>
+<li>令:</li>
+</ol>
+<p>$$m_pi=\sqrt{c_i} mod p$$</p>
+<p>$$m_qi=\sqrt{c_i} mod q$$</p>
+<p>其中等式右边表示模平方根;</p>
+<ol start="2">
+<li>根据扩展欧几里德算法:</li>
+</ol>
+<p>$$y_p∙p+y_q∙q=1$$</p>
+<p>得到p、q的一个线性表示;</p>
+<ol start="3">
+<li>可以证明每一个密文对应四个原文，分别记为r、-r、s和-s，且有:</li>
+</ol>
+<p>$$r=(y_p∙p∙m_q+y_q∙q∙m_p )  mod n$$</p>
+<p>$$-r=n-r$$</p>
+<p>$$s=(y_p∙p∙m_q-y_q∙q∙m_p )  mod n$$</p>
+<p>$$-s=n-s$$</p>
+<ol start="4">
+<li>注意: 如果\(p≡q≡3 (mod 4)\), 则</li>
+</ol>
+<p>$$m_p=c^{1/4(p+1)}  mod p$$</p>
+<p>$$m_q=c^{1/4(q+1)}  mod q$$</p>
+<p>而一般情况下, \(p≡q≡3 (mod 4)\)是满足的.</p>
+<p>当然，Rabin算法具有其致命的缺陷：一个密文对应四个明文。但此算法仍然包含了密码学中的基本概念和技巧，如单向函数、整数的因数分解等。</p>
+<p>Rabin算法的安全性基于整数的因式分解问题：只有将公钥n正确分解为私钥p、q，才可以将公钥加密后的密文还原为原文，而通常p、q都会取相当大的素数，因此n也是一个非常大的数字；数字越大，其因式分解越困难。</p>
+<h1 id="漏洞场景分析"><a href="#漏洞场景分析" class="headerlink" title="漏洞场景分析"></a>漏洞场景分析</h1><p>本案例中主要包括如下几个文件:</p>
+<p>公钥: pubkey.pem</p>
+<p>密文: flag.enc</p>
+<p>同样的, 可以根据<a href="">《小公钥指数攻击》</a>中的 openssl 和 python 脚本进行提取其中的公钥内容和密文内容.这里指讲解通过python来解决问题, 通过openssl方法.</p>
+<h2 id="获取公钥内容"><a href="#获取公钥内容" class="headerlink" title="获取公钥内容"></a>获取公钥内容</h2><p><img src="/2018/09/14/rsa-rabin/1.png" alt=""></p>
+<h2 id="可以看到e-2-这里考虑到使用Rabin-算法-首先分解一下-p-和-q-得到如下"><a href="#可以看到e-2-这里考虑到使用Rabin-算法-首先分解一下-p-和-q-得到如下" class="headerlink" title="可以看到e = 2, 这里考虑到使用Rabin 算法, 首先分解一下 p 和 q , 得到如下"></a>可以看到e = 2, 这里考虑到使用Rabin 算法, 首先分解一下 p 和 q , 得到如下</h2><p>其中可以使用素数在线分解工具:</p>
+<p><a href="http://www.factordb.com" target="_blank" rel="noopener">http://www.factordb.com</a></p>
+<p><img src="/2018/09/14/rsa-rabin/2.png" alt=""></p>
+<p>分解N</p>
+<p><img src="/2018/09/14/rsa-rabin/3.png" alt=""></p>
+<p>根据公式写相应的python脚本来得到明文</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*-coding: utf-8 -*-  </span></span><br><span class="line"><span class="keyword">import</span> gmpy  </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">n2s</span><span class="params">(num)</span>:</span>  </span><br><span class="line">    t = hex(num)[<span class="number">2</span>:]  </span><br><span class="line">    <span class="keyword">if</span> len(t) % <span class="number">2</span> == <span class="number">1</span>:  </span><br><span class="line">        <span class="keyword">return</span> (<span class="string">'0'</span>+t).decode(<span class="string">'hex'</span>)  </span><br><span class="line">    <span class="keyword">return</span> t.decode(<span class="string">'hex'</span>)  </span><br><span class="line"></span><br><span class="line">c = int(open(<span class="string">'flag.enc'</span>,<span class="string">'rb'</span>).read().encode(<span class="string">'hex'</span>),<span class="number">16</span>)  <span class="comment"># 密文 c  </span></span><br><span class="line">p = <span class="number">275127860351348928173285174381581152299</span>             <span class="comment"># 分解后的素数 p  </span></span><br><span class="line">q = <span class="number">319576316814478949870590164193048041239</span>             <span class="comment"># 分解后的素数 q  </span></span><br><span class="line">n = p*q                                                 <span class="comment"># 公钥 N  </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据中国剩余定理求解相应明文  </span></span><br><span class="line">r = pow(c,(p+<span class="number">1</span>)/<span class="number">4</span>,p)  </span><br><span class="line">s = pow(c,(q+<span class="number">1</span>)/<span class="number">4</span>,q)  </span><br><span class="line">a = gmpy.invert(p,q)  </span><br><span class="line">b = gmpy.invert(q,p)  </span><br><span class="line">x =(a*p*s+b*q*r)%n  </span><br><span class="line">y =(a*p*s-b*q*r)%n  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印明文  </span></span><br><span class="line"><span class="keyword">print</span> n2s(x%n)  </span><br><span class="line"><span class="keyword">print</span> n2s((-x)%n)  </span><br><span class="line"><span class="keyword">print</span> n2s(y%n)  </span><br><span class="line"><span class="keyword">print</span> n2s((-y)%n)</span><br></pre></td></tr></table></figure>
+<p>运行python脚本得到明文:</p>
+<p><img src="/2018/09/14/rsa-rabin/4.png" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/加解密/" rel="tag"># 加解密</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/13/small-public-key-index-attack/" rel="next" title="小公钥指数攻击">
+                <i class="fa fa-chevron-left"></i> 小公钥指数攻击
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/15/coppersmith-method-attack/" rel="prev" title="Coppersmith Method Attack">
+                Coppersmith Method Attack <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Cosmos</p>
+              <p class="site-description motion-element" itemprop="description">Friday is my fave 'F' word!</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本原理"><span class="nav-number">1.</span> <span class="nav-text">基本原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#漏洞场景分析"><span class="nav-number">2.</span> <span class="nav-text">漏洞场景分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#获取公钥内容"><span class="nav-number">2.1.</span> <span class="nav-text">获取公钥内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可以看到e-2-这里考虑到使用Rabin-算法-首先分解一下-p-和-q-得到如下"><span class="nav-number">2.2.</span> <span class="nav-text">可以看到e = 2, 这里考虑到使用Rabin 算法, 首先分解一下 p 和 q , 得到如下</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cosmos</span>
+
+  
+</div>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
