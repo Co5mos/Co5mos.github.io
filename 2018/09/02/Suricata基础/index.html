@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Suricata," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="问你何时曾看见，这世界为人们而改变。  Suricata简介Suricata是一款开源高性能的入侵检测系统，并支持IPS（入侵防御）与NSM（网络安全监控）模式，用来替代原有的Snort入侵检测系统，完全兼容Snort规则语法和支持Lua脚本。">
+<meta name="keywords" content="Suricata">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Suricata基础">
+<meta property="og:url" content="https://co5mos.github.io/2018/09/02/Suricata基础/index.html">
+<meta property="og:site_name" content="犰狳不求余">
+<meta property="og:description" content="问你何时曾看见，这世界为人们而改变。  Suricata简介Suricata是一款开源高性能的入侵检测系统，并支持IPS（入侵防御）与NSM（网络安全监控）模式，用来替代原有的Snort入侵检测系统，完全兼容Snort规则语法和支持Lua脚本。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://co5mos.github.io/2018/09/02/Suricata基础/WechatIMG842.jpeg">
+<meta property="og:updated_time" content="2019-09-02T06:38:02.363Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Suricata基础">
+<meta name="twitter:description" content="问你何时曾看见，这世界为人们而改变。  Suricata简介Suricata是一款开源高性能的入侵检测系统，并支持IPS（入侵防御）与NSM（网络安全监控）模式，用来替代原有的Snort入侵检测系统，完全兼容Snort规则语法和支持Lua脚本。">
+<meta name="twitter:image" content="https://co5mos.github.io/2018/09/02/Suricata基础/WechatIMG842.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://co5mos.github.io/2018/09/02/Suricata基础/"/>
+
+
+
+
+
+  <title>Suricata基础 | 犰狳不求余</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">犰狳不求余</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://co5mos.github.io/2018/09/02/Suricata基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cosmos">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="犰狳不求余">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Suricata基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-02T11:29:33+08:00">
+                2018-09-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术研究/" itemprop="url" rel="index">
+                    <span itemprop="name">技术研究</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>问你何时曾看见，这世界为人们而改变。</p>
+</blockquote>
+<h1 id="Suricata简介"><a href="#Suricata简介" class="headerlink" title="Suricata简介"></a>Suricata简介</h1><p>Suricata是一款开源高性能的入侵检测系统，并支持IPS（入侵防御）与NSM（网络安全监控）模式，用来替代原有的Snort入侵检测系统，完全兼容Snort规则语法和支持Lua脚本。</p>
+<a id="more"></a>
+<h1 id="Suricata-部署"><a href="#Suricata-部署" class="headerlink" title="Suricata 部署"></a>Suricata 部署</h1><h2 id="安装与编译"><a href="#安装与编译" class="headerlink" title="安装与编译"></a>安装与编译</h2><p><strong>参考地址:</strong> <a href="https://redmine.openinfosecfoundation.org/projects/suricata/wiki/Suricata_Installation" target="_blank" rel="noopener">https://redmine.openinfosecfoundation.org/projects/suricata/wiki/Suricata_Installation</a></p>
+<p><strong>安装环境:</strong> 本项目测试环境为Ubuntu 17.04 Zesty，其他OS请参考上述网址中的安装说明。</p>
+<blockquote>
+<p>说明：首次安装时推荐使用方式一自动编译，改动源码或自己下载指定版本时必须使用方式二进行手动编译。</p>
+</blockquote>
+<ul>
+<li><strong>安装方式一(自动编译)：</strong> Personal Package Archives(PPA)：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 下载最新稳定版本的suricata</span></span><br><span class="line">sudo add-apt-repository ppa:oisf/suricata-stable</span><br><span class="line"><span class="meta">#</span><span class="bash"> 更新apt-get</span></span><br><span class="line">sudo apt-get update</span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装suricata,安装完成后日志文件的默认路径为/var/<span class="built_in">log</span>/suricata，配置文件的默认路径为/etc/suricata</span></span><br><span class="line">sudo apt-get install suricata</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>安装方式二(手动编译)：</strong></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 预装suricata需要的外部依赖库</span></span><br><span class="line">sudo apt-get -y install libpcre3 libpcre3-dbg libpcre3-dev \</span><br><span class="line">build-essential autoconf automake libtool libpcap-dev libnet1-dev \</span><br><span class="line">libyaml-0-2 libyaml-dev zlib1g zlib1g-dev libcap-ng-dev libcap-ng0 \</span><br><span class="line">make libmagic-dev libjansson-dev libjansson4 pkg-config</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果需要suricata除了用作IDS模式外，也可激活IPS模式，请继续安装</span></span><br><span class="line">sudo apt-get -y install libnetfilter-queue-dev libnetfilter-queue1 libnfnetlink-dev libnfnetlink0</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载suricata，这里使用的版本是4.0.0(latest stable)</span></span><br><span class="line">VER=4.0.0</span><br><span class="line">wget "http://www.openinfosecfoundation.org/download/suricata-$VER.tar.gz"</span><br><span class="line">tar -xvzf "suricata-$VER.tar.gz"</span><br><span class="line">cd "suricata-$VER"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 编译</span></span><br><span class="line">./configure ‐‐enable‐luajit  ‐‐enable‐geoip  ‐‐prefix=/usr/ ‐‐sysconfdir=/etc/  ‐‐localstatedir=/var/</span><br><span class="line">sudo make clean</span><br><span class="line">sudo make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p><strong>参考地址：</strong> <a href="http://suricata.readthedocs.io/en/latest/configuration/suricata-yaml.html#suricata-yaml" target="_blank" rel="noopener">http://suricata.readthedocs.io/en/latest/configuration/suricata-yaml.html#suricata-yaml</a></p>
+<p><strong>配置文件：</strong> 默认路径： /etc/suricata/suricata.yaml</p>
+<blockquote>
+<p>注意：此部分仅对每个配置模块做简介，还有很多详细配置没有列出，具体请参考配置文件中的注释说明</p>
+</blockquote>
+<ul>
+<li><strong>网络配置：</strong></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Step 1: inform Suricata about your network</span></span><br><span class="line"></span><br><span class="line"><span class="meta">  #</span><span class="bash"> more specifc is better <span class="keyword">for</span> alert accuracy and performance</span></span><br><span class="line">  address-groups: #用于设置检测的网段</span><br><span class="line">  port-groups: #用于设置检测的端口</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>规则配置：</strong></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Step 2: select the rules to <span class="built_in">enable</span> or <span class="built_in">disable</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 默认规则文件路径</span></span><br><span class="line">default-rule-path: /etc/suricata/rules</span><br><span class="line"><span class="meta">#</span><span class="bash"> 该配置选项下包含了多个规则文件,增加规则文件则必须在此处配置</span></span><br><span class="line">rule-files:</span><br><span class="line"><span class="meta">#</span><span class="bash"> 默认配置路径</span></span><br><span class="line">classification-file: /etc/suricata/classification.config</span><br><span class="line">reference-config-file: /etc/suricata/reference.config</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>输出配置：</strong></li>
+</ul>
+<p><strong>请注意：其中outputs中的子配置项eve-log为关键配置</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Step 3: select outputs to <span class="built_in">enable</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 默认日志生成目录</span></span><br><span class="line">default-log-dir: /var/log/suricata/</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 是否开启引擎状态记录</span></span><br><span class="line">stats:</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 日志输出设置，该选项下包含多种输出格式</span></span><br><span class="line">outputs:</span><br><span class="line"><span class="meta">	#</span><span class="bash">日志保存至fast.log文件仅记录简单信息</span></span><br><span class="line">    - fast：</span><br><span class="line">    #日志保存至eve.json文件使用json格式保存日志数据，本项目中使用的关键配置</span><br><span class="line">    - eve-log：</span><br><span class="line">    	#该模式下可通过types设置记录日志类型：</span><br><span class="line">    	types:</span><br><span class="line">	    	#告警日志，关键配置</span><br><span class="line">	        - alert：</span><br><span class="line">	            #本项目暂时不启用payload以及相关配置</span><br><span class="line">	       		#payload: yes             # 在Base64中启用转储有效载荷</span><br><span class="line">	            #payload-buffer-size: 4mb # max size of payload buffer to output in eve-log</span><br><span class="line">	            #payload-printable: yes   # 在eve-log中输出的有效负载缓冲区的最大大小</span><br><span class="line">	            #packet: yes              # 启用转储数据包（无流段）</span><br><span class="line"></span><br><span class="line">	            #http相关配置</span><br><span class="line">	            http-body: yes            # 允许在Base64中转储http-body报文</span><br><span class="line">	            http-body-printable: no   # 允许以可打印格式转储http-body报文，不开启是因为在logstash里再做转码处理</span><br><span class="line">	            #metadata: yes            # 添加L7/applayer字段，flowbit和其他vars到警报输出</span><br><span class="line">	            http: yes                 # 包含在metadata中的子项，本项目暂时只需要http中的data，也可开启metadata关闭此项</span><br><span class="line">	            </span><br><span class="line"></span><br><span class="line">	            # 启用使用“tag”关键字的规则记录标记的数据包。</span><br><span class="line">	            tagged-packets: yes</span><br><span class="line"></span><br><span class="line">	            #暂不启用，通过添加额外的字段或覆盖他的源或目标IP地址（取决于流向）。</span><br><span class="line">	            xff:</span><br><span class="line">	              enabled: no</span><br><span class="line">	              header: X-Forwarded-For</span><br><span class="line"></span><br><span class="line">	        #http-extended日志</span><br><span class="line">	        - http：</span><br><span class="line">	       		extended: yes </span><br><span class="line">	       		#可以自定义额外的http信息，本项目无需再添加(已经自动捕获http-headers)</span><br><span class="line">	       		#custom: [Accept-Encoding, Accept-Language, Authorization]</span><br><span class="line">	        - dns: #dns日志</span><br><span class="line">	        - tls: #tls日志</span><br><span class="line">		    - files: #文件日志</span><br><span class="line">		    - smtp: #smtp日志</span><br><span class="line">		    - ssh: #ssh日志</span><br><span class="line">		    - stats: #引擎状态日志</span><br><span class="line"></span><br><span class="line"><span class="meta">	#</span><span class="bash"> 二进制日志文件格式</span></span><br><span class="line">    - unified2-alert：</span><br><span class="line"></span><br><span class="line">    # pcap 网络数据包文件格式</span><br><span class="line">    - pcap-log：</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 记录suricata工作日志，例如startup messages, errors，etc</span></span><br><span class="line">logging:</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>常用捕获设置</strong></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Step 4: configure common capture settings</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Linux高速捕获支持</span></span><br><span class="line">af-packet:</span><br><span class="line"><span class="meta">#</span><span class="bash"> 跨平台libpcap捕获支持</span></span><br><span class="line">pcap:</span><br><span class="line"><span class="meta">#</span><span class="bash"> 读取pcap文件的设置</span></span><br><span class="line">pcap-file:</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>应用层协议设置</strong></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Step 5: App Layer Protocol Configuration</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 配置应用层解析器</span></span><br><span class="line">app-layer:</span><br><span class="line"><span class="meta">#</span><span class="bash"> 限制要解码的asn1帧的最大数量（默认256）</span></span><br><span class="line">asn1-max-frames：</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>高级设置</strong></li>
+</ul>
+<p>高级配置项主要有如下七大类，详细设置请参考配置文件里的注释说明</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Advanced settings below ##</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Run Options</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Detection settings</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Advanced Traffic Tracking and Reconstruction Settings</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Performance tuning and profiling</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Netfilter integration</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Advanced Capture Options</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Hardware accelaration</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="1-3-规则编写"><a href="#1-3-规则编写" class="headerlink" title="1.3 规则编写"></a>1.3 规则编写</h3><p><strong>参考地址：</strong> <a href="http://suricata.readthedocs.io/en/latest/rules/index.html" target="_blank" rel="noopener">http://suricata.readthedocs.io/en/latest/rules/index.html</a></p>
+<p><strong>规则目录：</strong> /etc/suricata/rules</p>
+<ul>
+<li><strong>编写本地规则文件</strong></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入规则文件路径并且创建本地规则</span></span><br><span class="line">cd /etc/suricata/rules</span><br><span class="line">sudo nano local.rules</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 在文件内写入规则</span></span><br><span class="line">alert http any any -&gt; any any (msg:"cTs data"; content:"userlogin"; flowbits:set, user; flowbits:noalert; sid:1;)</span><br><span class="line">alert http any any -&gt; any any (msg:"sTc data"; file_data; content:"html"; flowbits:isset, user; sid:2;)</span><br></pre></td></tr></table></figure>
+<p><strong>flowbits规则说明：</strong> 通过flowset实现标记记录双向流量包。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">alert: action</span><br><span class="line">http: protocol</span><br><span class="line">any any -&gt; any any: source_ip port -&gt; dest_ip port</span><br><span class="line">msg: message</span><br><span class="line">content: 检测包中是否含有content字段的值(此例中为userlogin)，如果有则触发警报</span><br><span class="line">flowbits:set, user;如果payload含有content字段值，标记这个flow为user;</span><br><span class="line">flowbits:noalert;:此条不触发警报</span><br><span class="line">flowbits:isset, user: 检测之前的包是否有记录flow:user.</span><br><span class="line">file_data: 解决gzip问题，在此字段之后所有用到content的地方，检测的都是有效信息(gzip解码之后的信息)。</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>在配置中添加文件</strong></li>
+</ul>
+<p>每添加一个新的规则文件，都需要在配置中设置。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rule-files:</span><br><span class="line"> - suricata.rules</span><br><span class="line"> - local.rules</span><br><span class="line"><span class="meta"> #</span><span class="bash">- more rules...</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>指定配置运行</strong></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo suricata -c /etc/suricata/suricata.yaml -i eth0</span><br></pre></td></tr></table></figure>
+<h3 id="1-4-启动引擎"><a href="#1-4-启动引擎" class="headerlink" title="1.4 启动引擎"></a>1.4 启动引擎</h3><p><strong>参考地址：</strong> <a href="http://suricata.readthedocs.io/en/latest/command-line-options.html" target="_blank" rel="noopener">http://suricata.readthedocs.io/en/latest/command-line-options.html</a></p>
+<p>所有cmd line指令请参考以上地址，在此仅罗列常用命令</p>
+<p>使用预录制的pcap:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo suricata -r filepath.pcap</span><br></pre></td></tr></table></figure>
+<p>使用网卡real-time:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo suricata -i eth0</span><br></pre></td></tr></table></figure>
+<p>使用指定配置文件:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo suricata -c /etc/suricata/suricata.yaml -i eth0</span><br></pre></td></tr></table></figure>
+<h3 id="1-5-输出日志"><a href="#1-5-输出日志" class="headerlink" title="1.5 输出日志"></a>1.5 输出日志</h3><p><strong>参考地址：</strong> <a href="http://suricata.readthedocs.io/en/latest/output/index.html" target="_blank" rel="noopener">http://suricata.readthedocs.io/en/latest/output/index.html</a></p>
+<p><strong>输出目录：</strong> /var/log/suricata</p>
+<p>ex: 一条alert警报在eve.json的输出</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"timestamp"</span>: <span class="string">"2017-09-07T18:07:49.083281+0800"</span>,</span><br><span class="line">    <span class="attr">"flow_id"</span>: <span class="number">2057888926574163</span>,</span><br><span class="line">    <span class="attr">"pcap_cnt"</span>: <span class="number">70</span>,</span><br><span class="line">    <span class="attr">"event_type"</span>: <span class="string">"alert"</span>,</span><br><span class="line">    <span class="attr">"src_ip"</span>: <span class="string">"192.168.100.12"</span>,</span><br><span class="line">    <span class="attr">"src_port"</span>: <span class="number">80</span>,</span><br><span class="line">    <span class="attr">"dest_ip"</span>: <span class="string">"192.168.20.136"</span>,</span><br><span class="line">    <span class="attr">"dest_port"</span>: <span class="number">53931</span>,</span><br><span class="line">    <span class="attr">"proto"</span>: <span class="string">"TCP"</span>,</span><br><span class="line">    <span class="attr">"tx_id"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">"alert"</span>: &#123;</span><br><span class="line">        <span class="attr">"action"</span>: <span class="string">"allowed"</span>,</span><br><span class="line">        <span class="attr">"gid"</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">"signature_id"</span>: <span class="number">2</span>,</span><br><span class="line">        <span class="attr">"rev"</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">"signature"</span>: <span class="string">"sTc data"</span>,</span><br><span class="line">        <span class="attr">"category"</span>: <span class="string">""</span>,</span><br><span class="line">        <span class="attr">"severity"</span>: <span class="number">3</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"http"</span>: &#123;</span><br><span class="line">        <span class="attr">"http_request_headers"</span>: &#123;</span><br><span class="line">            <span class="attr">"Host"</span>: <span class="string">"xxx.com"</span>,</span><br><span class="line">            <span class="attr">"Accept"</span>: <span class="string">"xxx"</span>,</span><br><span class="line">            <span class="attr">"Accept-Encoding"</span>: <span class="string">"gzip, deflate"</span>,</span><br><span class="line">            <span class="attr">"Accept-Language"</span>: <span class="string">"zh-cn"</span>,</span><br><span class="line">            <span class="attr">"Content-Type"</span>: <span class="string">"application/x-www-form-urlencoded"</span>,</span><br><span class="line">            <span class="attr">"Origin"</span>: <span class="string">"xxx"</span>,</span><br><span class="line">            <span class="attr">"User-Agent"</span>: <span class="string">"Mozilla/5.0"</span>,</span><br><span class="line">            <span class="attr">"Connection"</span>: <span class="string">"keep-alive"</span>,</span><br><span class="line">            <span class="attr">"Upgrade-Insecure-Requests"</span>: <span class="string">"1"</span>,</span><br><span class="line">            <span class="attr">"Referer"</span>: <span class="string">"xxx/sign_in"</span>,</span><br><span class="line">            <span class="attr">"Content-Length"</span>: <span class="string">"215"</span>,</span><br><span class="line">            <span class="attr">"Cookie"</span>: <span class="string">"xxx"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">"http_response_headers"</span>: &#123;</span><br><span class="line">            <span class="attr">"Server"</span>: <span class="string">"nginx"</span>,</span><br><span class="line">            <span class="attr">"Date"</span>: <span class="string">"Thu, 07 Sep 2017 10:07:48 GMT"</span>,</span><br><span class="line">            <span class="attr">"Content-Type"</span>: <span class="string">"text/html; charset=utf-8"</span>,</span><br><span class="line">            <span class="attr">"Transfer-Encoding"</span>: <span class="string">"chunked"</span>,</span><br><span class="line">            <span class="attr">"Connection"</span>: <span class="string">"keep-alive"</span>,</span><br><span class="line">            <span class="attr">"Cache-Control"</span>: <span class="string">"max-age=0, private, must-revalidate"</span>,</span><br><span class="line">            <span class="attr">"Etag"</span>: <span class="string">"xxx"</span>,</span><br><span class="line">            <span class="attr">"X-Content-Type-Options"</span>: <span class="string">"nosniff"</span>,</span><br><span class="line">            <span class="attr">"X-Frame-Options"</span>: <span class="string">"DENY"</span>,</span><br><span class="line">            <span class="attr">"X-Request-Id"</span>: <span class="string">"xxx"</span>,</span><br><span class="line">            <span class="attr">"X-Runtime"</span>: <span class="string">"0.119753"</span>,</span><br><span class="line">            <span class="attr">"X-Ua-Compatible"</span>: <span class="string">"IE=edge"</span>,</span><br><span class="line">            <span class="attr">"X-Xss-Protection"</span>: <span class="string">"1; mode=block"</span>,</span><br><span class="line">            <span class="attr">"Strict-Transport-Security"</span>: <span class="string">"xxx"</span>,</span><br><span class="line">            <span class="attr">"Content-Encoding"</span>: <span class="string">"gzip"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">"hostname"</span>: <span class="string">"xxx.com"</span>,</span><br><span class="line">        <span class="attr">"url"</span>: <span class="string">"/users/sign_in"</span>,</span><br><span class="line">        <span class="attr">"http_user_agent"</span>: <span class="string">"Mozilla/5.0 xxx"</span>,</span><br><span class="line">        <span class="attr">"http_content_type"</span>: <span class="string">"text/html"</span>,</span><br><span class="line">        <span class="attr">"http_refer"</span>: <span class="string">"xxx/users/sign_in"</span>,</span><br><span class="line">        <span class="attr">"http_method"</span>: <span class="string">"POST"</span>,</span><br><span class="line">        <span class="attr">"protocol"</span>: <span class="string">"HTTP/1.1"</span>,</span><br><span class="line">        <span class="attr">"status"</span>: <span class="number">200</span>,</span><br><span class="line">        <span class="attr">"length"</span>: <span class="number">3652</span>,</span><br><span class="line">        <span class="attr">"http_request_body"</span>: <span class="string">"xxx"</span>,</span><br><span class="line">        <span class="attr">"http_response_body"</span>: <span class="string">"xxx"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"app_proto"</span>: <span class="string">"http"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Suricata-架构简图"><a href="#Suricata-架构简图" class="headerlink" title="Suricata 架构简图"></a>Suricata 架构简图</h1><p><img src="/2018/09/02/Suricata基础/WechatIMG842.jpeg" alt="01"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Suricata/" rel="tag"># Suricata</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/29/linux-screen/" rel="next" title="Linux Screen总结">
+                <i class="fa fa-chevron-left"></i> Linux Screen总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/11/burp-plugin/" rel="prev" title="Burp 插件编写示例">
+                Burp 插件编写示例 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Cosmos</p>
+              <p class="site-description motion-element" itemprop="description">Friday is my fave 'F' word!</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Suricata简介"><span class="nav-number">1.</span> <span class="nav-text">Suricata简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Suricata-部署"><span class="nav-number">2.</span> <span class="nav-text">Suricata 部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装与编译"><span class="nav-number">2.1.</span> <span class="nav-text">安装与编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">2.2.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-规则编写"><span class="nav-number">2.2.1.</span> <span class="nav-text">1.3 规则编写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-启动引擎"><span class="nav-number">2.2.2.</span> <span class="nav-text">1.4 启动引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-输出日志"><span class="nav-number">2.2.3.</span> <span class="nav-text">1.5 输出日志</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Suricata-架构简图"><span class="nav-number">3.</span> <span class="nav-text">Suricata 架构简图</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cosmos</span>
+
+  
+</div>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
