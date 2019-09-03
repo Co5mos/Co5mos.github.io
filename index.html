@@ -7,7 +7,7 @@
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
-  <meta charset="UTF-8"/>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
@@ -124,7 +124,7 @@
 
 
 
-  <title>犰狳不求余</title>
+  <title>犰狳不求余</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -143,7 +143,7 @@
     
   
 
-  <div class="container sidebar-position-left 
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left 
   page-home">
     <div class="headband"></div>
 
@@ -344,9 +344,7 @@
 
       
         
-          <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-
-<blockquote>
+          <blockquote>
 <p>是空空荡荡、却嗡嗡作响。</p>
 </blockquote>
 <h1 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h1><p>首先，我们来简单介绍一下 Coppersmith method 方法，该方法由 Don Coppersmith 提出，可以用来找到单变量或者二元变量的多项式在模某个整数下的根，这里我们主要以单变量为主，假设我们有如下的一个在模N意义下的多项式F:</p>
@@ -498,9 +496,7 @@
 
       
         
-          <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-
-<blockquote>
+          <blockquote>
 <p>忙忙忙，盲盲盲，忙是为了自己的理想还是为了不让别人失望。</p>
 </blockquote>
 <h1 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h1><p>Rabin加密算法简介:</p>
@@ -654,9 +650,7 @@
 
       
         
-          <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-
-<blockquote>
+          <blockquote>
 <p>每当我对这世界感到沮丧，就去看看你眼中的光芒。</p>
 </blockquote>
 <h1 id="RSA基本介绍"><a href="#RSA基本介绍" class="headerlink" title="RSA基本介绍"></a>RSA基本介绍</h1><h2 id="公钥与私钥的产生"><a href="#公钥与私钥的产生" class="headerlink" title="公钥与私钥的产生"></a>公钥与私钥的产生</h2><ol>
@@ -2046,6 +2040,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
 
   
 

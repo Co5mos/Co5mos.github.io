@@ -7,7 +7,7 @@
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
-  <meta charset="UTF-8"/>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
@@ -91,7 +91,7 @@
 <meta property="og:image" content="https://co5mos.github.io/2018/09/14/rsa-rabin/2.png">
 <meta property="og:image" content="https://co5mos.github.io/2018/09/14/rsa-rabin/3.png">
 <meta property="og:image" content="https://co5mos.github.io/2018/09/14/rsa-rabin/4.png">
-<meta property="og:updated_time" content="2019-09-03T14:32:11.604Z">
+<meta property="og:updated_time" content="2019-09-03T15:12:24.300Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RSA衍生算法—RABIN算法">
 <meta name="twitter:description" content="忙忙忙，盲盲盲，忙是为了自己的理想还是为了不让别人失望。  基本原理Rabin加密算法简介: Rabin算法是一种基于模平方和模平方根的非对称加密算法. 称a为x的算数平方, 称x为a的算数平方根 $$a=x^2⇔x=\sqrt[2]{x}$$ 称a为x模m时的平方, 称x为a模m时的平方根 $$a≡x^2 mod m⇔x≡\sqrt[2]{x} mod m$$">
@@ -131,7 +131,7 @@
 
 
 
-  <title>RSA衍生算法—RABIN算法 | 犰狳不求余</title>
+  <title>RSA衍生算法—RABIN算法 | 犰狳不求余</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -150,7 +150,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -347,9 +347,7 @@
       
 
       
-        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-
-<blockquote>
+        <blockquote>
 <p>忙忙忙，盲盲盲，忙是为了自己的理想还是为了不让别人失望。</p>
 </blockquote>
 <h1 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h1><p>Rabin加密算法简介:</p>
@@ -394,7 +392,7 @@
 <h1 id="漏洞场景分析"><a href="#漏洞场景分析" class="headerlink" title="漏洞场景分析"></a>漏洞场景分析</h1><p>本案例中主要包括如下几个文件:</p>
 <p>公钥: pubkey.pem</p>
 <p>密文: flag.enc</p>
-<p>同样的, 可以根据<a href="">《小公钥指数攻击》</a>中的 openssl 和 python 脚本进行提取其中的公钥内容和密文内容.这里指讲解通过python来解决问题, 通过openssl方法.</p>
+<p>同样的, 可以根据<a href="https://co5mos.github.io/2018/09/13/small-public-key-index-attack/">《小公钥指数攻击》</a>中的 openssl 和 python 脚本进行提取其中的公钥内容和密文内容.这里指讲解通过python来解决问题, 通过openssl方法.</p>
 <h2 id="获取公钥内容"><a href="#获取公钥内容" class="headerlink" title="获取公钥内容"></a>获取公钥内容</h2><p><img src="/2018/09/14/rsa-rabin/1.png" alt=""></p>
 <h2 id="可以看到e-2-这里考虑到使用Rabin-算法-首先分解一下-p-和-q-得到如下"><a href="#可以看到e-2-这里考虑到使用Rabin-算法-首先分解一下-p-和-q-得到如下" class="headerlink" title="可以看到e = 2, 这里考虑到使用Rabin 算法, 首先分解一下 p 和 q , 得到如下"></a>可以看到e = 2, 这里考虑到使用Rabin 算法, 首先分解一下 p 和 q , 得到如下</h2><p>其中可以使用素数在线分解工具:</p>
 <p><a href="http://www.factordb.com" target="_blank" rel="noopener">http://www.factordb.com</a></p>
@@ -781,6 +779,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
 
   
 
