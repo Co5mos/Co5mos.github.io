@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="加解密," />
+  <meta name="keywords" content="Golang," />
 
 
 
@@ -79,23 +79,18 @@
 
 
 
-<meta name="description" content="每当我对这世界感到沮丧，就去看看你眼中的光芒。  RSA基本介绍公钥与私钥的产生 随机选择两个不同大质数 p 和 q ，计算 \(N=p× q\) 。  根据欧拉函数, 求得 \(r=φ(N)=φ(p)φ(q)=(p-1)(q-1)\) 。  选择一个小于r的整数e, 使e和r互质。并求得e关于r的模反元素, 命名为\(d(ed≡1(mod  r))\) 。  将p和q的记录销毁。">
-<meta name="keywords" content="加解密">
+<meta name="description" content="想写爬虫，想用Go获取网站Banner。本文涉及，获取随机User-Agent、发起GET请求、XPath解析。">
+<meta name="keywords" content="Golang">
 <meta property="og:type" content="article">
-<meta property="og:title" content="小公钥指数攻击">
-<meta property="og:url" content="https://co5mos.github.io/2018/09/13/small-public-key-index-attack/index.html">
+<meta property="og:title" content="Golang学习之获取网站Banner">
+<meta property="og:url" content="https://co5mos.github.io/2019/11/17/go-get-banner/index.html">
 <meta property="og:site_name" content="犰狳不求余">
-<meta property="og:description" content="每当我对这世界感到沮丧，就去看看你眼中的光芒。  RSA基本介绍公钥与私钥的产生 随机选择两个不同大质数 p 和 q ，计算 \(N=p× q\) 。  根据欧拉函数, 求得 \(r=φ(N)=φ(p)φ(q)=(p-1)(q-1)\) 。  选择一个小于r的整数e, 使e和r互质。并求得e关于r的模反元素, 命名为\(d(ed≡1(mod  r))\) 。  将p和q的记录销毁。">
+<meta property="og:description" content="想写爬虫，想用Go获取网站Banner。本文涉及，获取随机User-Agent、发起GET请求、XPath解析。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://co5mos.github.io/2018/09/13/small-public-key-index-attack/1.png">
-<meta property="og:image" content="https://co5mos.github.io/2018/09/13/small-public-key-index-attack/2.png">
-<meta property="og:image" content="https://co5mos.github.io/2018/09/13/small-public-key-index-attack/3.png">
-<meta property="og:image" content="https://co5mos.github.io/2018/09/13/small-public-key-index-attack/4.png">
-<meta property="og:updated_time" content="2019-09-03T15:12:17.512Z">
+<meta property="og:updated_time" content="2019-11-22T12:42:09.186Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="小公钥指数攻击">
-<meta name="twitter:description" content="每当我对这世界感到沮丧，就去看看你眼中的光芒。  RSA基本介绍公钥与私钥的产生 随机选择两个不同大质数 p 和 q ，计算 \(N=p× q\) 。  根据欧拉函数, 求得 \(r=φ(N)=φ(p)φ(q)=(p-1)(q-1)\) 。  选择一个小于r的整数e, 使e和r互质。并求得e关于r的模反元素, 命名为\(d(ed≡1(mod  r))\) 。  将p和q的记录销毁。">
-<meta name="twitter:image" content="https://co5mos.github.io/2018/09/13/small-public-key-index-attack/1.png">
+<meta name="twitter:title" content="Golang学习之获取网站Banner">
+<meta name="twitter:description" content="想写爬虫，想用Go获取网站Banner。本文涉及，获取随机User-Agent、发起GET请求、XPath解析。">
 
 
 
@@ -125,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://co5mos.github.io/2018/09/13/small-public-key-index-attack/"/>
+  <link rel="canonical" href="https://co5mos.github.io/2019/11/17/go-get-banner/"/>
 
 
 
 
 
-  <title>小公钥指数攻击 | 犰狳不求余</title>
+  <title>Golang学习之获取网站Banner | 犰狳不求余</title>
   
 
 
@@ -258,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://co5mos.github.io/2018/09/13/small-public-key-index-attack/">
+    <link itemprop="mainEntityOfPage" href="https://co5mos.github.io/2019/11/17/go-get-banner/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Co5mos">
@@ -275,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">小公钥指数攻击</h1>
+          <h1 class="post-title" itemprop="name headline">Golang学习之获取网站Banner</h1>
         
 
         <div class="post-meta">
@@ -287,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-13T22:33:47+08:00">
-                2018-09-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-17T20:25:00+08:00">
+                2019-11-17
               </time>
             
 
@@ -310,8 +305,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数学之美/" itemprop="url" rel="index">
-                    <span itemprop="name">数学之美</span>
+                  <a href="/categories/编程之道/" itemprop="url" rel="index">
+                    <span itemprop="name">编程之道</span>
                   </a>
                 </span>
 
@@ -347,65 +342,31 @@
       
 
       
-        <blockquote>
-<p>每当我对这世界感到沮丧，就去看看你眼中的光芒。</p>
-</blockquote>
-<h1 id="RSA基本介绍"><a href="#RSA基本介绍" class="headerlink" title="RSA基本介绍"></a>RSA基本介绍</h1><h2 id="公钥与私钥的产生"><a href="#公钥与私钥的产生" class="headerlink" title="公钥与私钥的产生"></a>公钥与私钥的产生</h2><ol>
-<li><p>随机选择两个不同大质数 p 和 q ，计算 \(N=p× q\) 。</p>
-</li>
-<li><p>根据欧拉函数, 求得 \(r=φ(N)=φ(p)φ(q)=(p-1)(q-1)\) 。</p>
-</li>
-<li><p>选择一个小于r的整数e, 使e和r互质。并求得e关于r的模反元素, 命名为\(d(ed≡1(mod  r))\) 。</p>
-</li>
-<li><p>将p和q的记录销毁。</p>
-</li>
-</ol>
+        <p>想写爬虫，想用Go获取网站Banner。<br>本文涉及，获取随机User-Agent、发起GET请求、XPath解析。</p>
 <a id="more"></a>
-<p>此时(N, e)为公钥, (N, d)为私钥。</p>
-<h2 id="消息加密"><a href="#消息加密" class="headerlink" title="消息加密"></a>消息加密</h2><p>首先需要将消息 m 以一个双方约定好的格式转化为一个小于 N ，且与 N 互质的整数 n 。如果消息太长，可以将消息分为几段，这也就是我们所说的块加密，后对于每一部分利用如下公式加密:</p>
-<p>$$n^e≡c (mod N)$$</p>
-<h2 id="消息解密"><a href="#消息解密" class="headerlink" title="消息解密"></a>消息解密</h2><p>利用密钥 d 进行解密。</p>
-<p>$$c^d≡n (mod N)$$</p>
-<h2 id="正确性证明"><a href="#正确性证明" class="headerlink" title="正确性证明"></a>正确性证明</h2><p>即我们要证\(n^ed≡n mod N\), 已知\(ed≡1 mod φ(N)\), 那么\(ed=kφ(N)+1\), 即需要证明:</p>
-<p>$$n^{kφ(N)+1}≡n mod N$$</p>
-<p>这里我们分两种情况证明:</p>
-<p>第一种情况:</p>
-<p>\(gcd⁡(n,N) = 1\), 那么\(n^{φ(N)}≡1 mod N\), 因此原式成立;</p>
-<p>第二种情况:</p>
-<p>\(gcd⁡(n,N) != 1\), 那么n必然是p或者q的倍数，并且n小于N。我们假设:</p>
-<p>n=xp</p>
-<p>那么x必然小于q，又由于q是素数。那么:</p>
-<p>$$n^{φ(q)}≡1 mod q$$</p>
-<p>进而:</p>
-<p>$$n^{kφ(N)}=n^{k(p-1)(q-1)}=(n^{φ(q)})^{k(p-1)}≡1 mod q$$</p>
-<p>那么\(n^{kφ(N)+1}=n+uqn\), 进而\(n^{kφ(N)+1}=n+uqn=n+uxN\), 所以原式成立.</p>
-<h1 id="漏洞场景分析"><a href="#漏洞场景分析" class="headerlink" title="漏洞场景分析"></a>漏洞场景分析</h1><p>小公钥指数攻击:</p>
-<h2 id="攻击条件"><a href="#攻击条件" class="headerlink" title="攻击条件"></a>攻击条件</h2><p>e特别小, 例如e = 3</p>
-<h2 id="攻击原理"><a href="#攻击原理" class="headerlink" title="攻击原理"></a>攻击原理</h2><p>假设用户使用的公钥e = 3. 考虑到加密关系满足:</p>
-<p>$$c≡m^3 mod N$$</p>
-<p>则:</p>
-<p>$$m^3=c+k × N$$</p>
-<p>$$m=\sqrt[3]{c+k ×N}$$</p>
-<p>可攻击者可以从小到达枚举k, 依次开三次方, 知道开出整数为止.</p>
-<h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><p>其中包含公钥pubkey.pem, 密文flag.enc：</p>
-<p>可以通过openssl 来获取公钥到N 和 e, 同时也可以通过python 脚本来获取, 这里将介绍这两种方法:</p>
-<ol>
-<li>通过openssl 来获取 [N, e]:</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl rsa -pubin -in pubkey.pem -text –modulus</span><br></pre></td></tr></table></figure>
-<p><img src="/2018/09/13/small-public-key-index-attack/1.png" alt=""></p>
-<p>可以看到其中指数 e = 3 很明显是小公钥指数攻击</p>
-<ol start="2">
-<li>通过python 脚本来获取, 这里推荐使用 gmpy2 和 Crpyto 两个库获取公钥内容:</li>
-</ol>
-<p><img src="/2018/09/13/small-public-key-index-attack/2.png" alt=""></p>
-<p>获取密文:</p>
-<p><img src="/2018/09/13/small-public-key-index-attack/3.png" alt=""></p>
-<h1 id="漏洞场景利用"><a href="#漏洞场景利用" class="headerlink" title="漏洞场景利用"></a>漏洞场景利用</h1><p>接下来通过完整的脚本来破解密文得到明文:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8  </span></span><br><span class="line"><span class="keyword">import</span> gmpy2  </span><br><span class="line"><span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> RSA  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 提取key，N， e  </span></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'pubkey.pem'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f:  </span><br><span class="line">    key = RSA.importKey(f)  </span><br><span class="line">    N = key.n  </span><br><span class="line">    e = key.e  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 提取密文 c  </span></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'flag.enc'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f:  </span><br><span class="line">    cipher = f.read().encode(<span class="string">'hex'</span>)  </span><br><span class="line">    cipher = int(cipher, <span class="number">16</span>)  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 计算 k  </span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">calc</span><span class="params">(j)</span>:</span>  </span><br><span class="line">    <span class="keyword">print</span> j  </span><br><span class="line">    a, b = gmpy2.iroot(cipher + j * N, <span class="number">3</span>)    <span class="comment"># a 为 cipher + j * N 开三次方的值,  b 取 True or False. 如果可得整数b = True; 反之, False.   </span></span><br><span class="line">    <span class="keyword">if</span> b == <span class="number">1</span>:  </span><br><span class="line">        m = a  </span><br><span class="line">        <span class="keyword">print</span> <span class="string">'&#123;:x&#125;'</span>.format(int(m)).decode(<span class="string">'hex'</span>)  </span><br><span class="line">        exit()  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">SmallE</span><span class="params">()</span>:</span>  </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">130000000</span>):  </span><br><span class="line">       calc(i)  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:  </span><br><span class="line">    <span class="keyword">print</span> <span class="string">'start'</span>  </span><br><span class="line">    SmallE()</span><br></pre></td></tr></table></figure>
-<p>其中枚举k</p>
-<p>通过密文c和公钥[N, e]有\(m=\sqrt[3]{c+k ×N}\), 可以得到明文.</p>
-<p><img src="/2018/09/13/small-public-key-index-attack/4.png" alt=""></p>
+<h2 id="Random-User-Agent"><a href="#Random-User-Agent" class="headerlink" title="Random User-Agent"></a>Random User-Agent</h2><p>此时就要推荐一个库了，哈哈哈哈</p>
+<blockquote>
+<p><a href="https://github.com/EDDYCJY/fake-useragent" target="_blank" rel="noopener">https://github.com/EDDYCJY/fake-useragent</a></p>
+</blockquote>
+<p>使用简单明了而且好用。</p>
+<h2 id="GET请求"><a href="#GET请求" class="headerlink" title="GET请求"></a>GET请求</h2><p>之前写了一个POST请求的注意事项，GET请求倒没啥说的，挺简单。</p>
+<p>本来想使用如下操作的：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"io/ioutil"</span></span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">	<span class="string">"net/http"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	res, err := http.Get(<span class="string">"http://www.google.com/robots.txt"</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">	robots, err := ioutil.ReadAll(res.Body)</span><br><span class="line">	res.Body.Close()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Printf(<span class="string">"%s"</span>, robots)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>发现不得行，看文档最后有这么一句：</p>
+<blockquote>
+<p>To make a request with custom headers, use NewRequest and DefaultClient.Do.</p>
+</blockquote>
+<p>老实改成和POST一样的操作吧，加上Random UA。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getHTTPBanner</span><span class="params">(url <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	<span class="comment">// 获取网站banner</span></span><br><span class="line">	randomUA := browser.Random()</span><br><span class="line"></span><br><span class="line">	client := &amp;http.Client&#123;&#125;</span><br><span class="line">	req, _ := http.NewRequest(<span class="string">"GET"</span>, url, <span class="literal">nil</span>)</span><br><span class="line">	req.Header.Set(<span class="string">"User-Agent"</span>, randomUA)</span><br><span class="line"></span><br><span class="line">	resp, err := client.Do(req)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(<span class="string">"Http get err:"</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> resp.Body.Close()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="XPath"><a href="#XPath" class="headerlink" title="XPath"></a>XPath</h2><p>Python 有 BeautifulSoup 这样简单的库，当然也可以用 lxml，同样的，Golang中其实也有很多可以用来提取节点元素的方法，这里推荐阅读以下：</p>
+<blockquote>
+<p><a href="https://strconv.com/page/2/" target="_blank" rel="noopener">https://strconv.com/page/2/</a></p>
+</blockquote>
+<p>其中对比了个Golang的库。</p>
+<p>这里我使用的是： github.com/antchfx/htmlquery</p>
+<p>获取页面HTML后，解析HTML，然后直接获取title节点，然后提取信息即可。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getHTTPBanner</span><span class="params">(url <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	<span class="comment">// 获取网站banner</span></span><br><span class="line">	randomUA := browser.Random()</span><br><span class="line"></span><br><span class="line">	client := &amp;http.Client&#123;&#125;</span><br><span class="line">	req, _ := http.NewRequest(<span class="string">"GET"</span>, url, <span class="literal">nil</span>)</span><br><span class="line">	req.Header.Set(<span class="string">"User-Agent"</span>, randomUA)</span><br><span class="line"></span><br><span class="line">	resp, err := client.Do(req)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(<span class="string">"Http get err:"</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> resp.Body.Close()</span><br><span class="line"></span><br><span class="line">	doc, err := htmlquery.Parse(resp.Body)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	title := htmlquery.FindOne(doc, <span class="string">`/html/head/title/text()`</span>)</span><br><span class="line">	fmt.Printf(<span class="string">"[+] %s: %s\n"</span>, url, htmlquery.InnerText(title))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参考：<a href="https://strconv.com/posts/web-crawler-exercise-5/" target="_blank" rel="noopener">https://strconv.com/posts/web-crawler-exercise-5/</a></p>
 
       
     </div>
@@ -423,7 +384,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/加解密/" rel="tag"> <i class="fa fa-tag"></i> 加解密</a>
+            <a href="/tags/Golang/" rel="tag"> <i class="fa fa-tag"></i> Golang</a>
           
         </div>
       
@@ -436,8 +397,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/11/burp-plugin/" rel="next" title="Burp 插件编写示例">
-                <i class="fa fa-chevron-left"></i> Burp 插件编写示例
+              <a href="/2019/11/16/c2ips/" rel="next" title="Golang学习之C段转IP">
+                <i class="fa fa-chevron-left"></i> Golang学习之C段转IP
               </a>
             
           </div>
@@ -445,10 +406,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/09/14/rsa-rabin/" rel="prev" title="RSA衍生算法—RABIN算法">
-                RSA衍生算法—RABIN算法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -610,7 +567,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RSA基本介绍"><span class="nav-number">1.</span> <span class="nav-text">RSA基本介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#公钥与私钥的产生"><span class="nav-number">1.1.</span> <span class="nav-text">公钥与私钥的产生</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消息加密"><span class="nav-number">1.2.</span> <span class="nav-text">消息加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消息解密"><span class="nav-number">1.3.</span> <span class="nav-text">消息解密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正确性证明"><span class="nav-number">1.4.</span> <span class="nav-text">正确性证明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#漏洞场景分析"><span class="nav-number">2.</span> <span class="nav-text">漏洞场景分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#攻击条件"><span class="nav-number">2.1.</span> <span class="nav-text">攻击条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#攻击原理"><span class="nav-number">2.2.</span> <span class="nav-text">攻击原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#场景"><span class="nav-number">2.3.</span> <span class="nav-text">场景</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#漏洞场景利用"><span class="nav-number">3.</span> <span class="nav-text">漏洞场景利用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Random-User-Agent"><span class="nav-number">1.</span> <span class="nav-text">Random User-Agent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GET请求"><span class="nav-number">2.</span> <span class="nav-text">GET请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XPath"><span class="nav-number">3.</span> <span class="nav-text">XPath</span></a></li></ol></div>
             
 
           </div>
