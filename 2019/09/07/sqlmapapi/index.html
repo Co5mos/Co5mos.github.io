@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="春风再美也比不上你的笑, 没见过你的人不会明了。  -help12345678910111213&amp;gt; python sqlmapapi.py --helpUsage: sqlmapapi.py [options]Options:  -h, --help            show this help message and exit  -s, --server          Run">
+<meta name="description" content="春风再美也比不上你的笑, 没见过你的人不会明了。  最近要写一个批量工具，然后就要用到sqlmap的api，顺手总结一下自己用的。">
 <meta name="keywords" content="Sqlmap">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Sqlmap API 总结">
 <meta property="og:url" content="https://co5mos.github.io/2019/09/07/sqlmapapi/index.html">
 <meta property="og:site_name" content="犰狳不求余">
-<meta property="og:description" content="春风再美也比不上你的笑, 没见过你的人不会明了。  -help12345678910111213&amp;gt; python sqlmapapi.py --helpUsage: sqlmapapi.py [options]Options:  -h, --help            show this help message and exit  -s, --server          Run">
+<meta property="og:description" content="春风再美也比不上你的笑, 没见过你的人不会明了。  最近要写一个批量工具，然后就要用到sqlmap的api，顺手总结一下自己用的。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-15T06:45:07.881Z">
+<meta property="og:updated_time" content="2019-11-23T15:46:45.011Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sqlmap API 总结">
-<meta name="twitter:description" content="春风再美也比不上你的笑, 没见过你的人不会明了。  -help12345678910111213&amp;gt; python sqlmapapi.py --helpUsage: sqlmapapi.py [options]Options:  -h, --help            show this help message and exit  -s, --server          Run">
+<meta name="twitter:description" content="春风再美也比不上你的笑, 没见过你的人不会明了。  最近要写一个批量工具，然后就要用到sqlmap的api，顺手总结一下自己用的。">
 
 
 
@@ -345,8 +345,9 @@
         <blockquote>
 <p>春风再美也比不上你的笑, 没见过你的人不会明了。</p>
 </blockquote>
-<h2 id="help"><a href="#help" class="headerlink" title="-help"></a>-help</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> python sqlmapapi.py --<span class="built_in">help</span></span></span><br><span class="line"></span><br><span class="line">Usage: sqlmapapi.py [options]</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  -h, --help            show this help message and exit</span><br><span class="line">  -s, --server          Run as a REST-JSON API server</span><br><span class="line">  -c, --client          Run as a REST-JSON API client</span><br><span class="line">  -H HOST, --host=HOST  Host of the REST-JSON API server (default "127.0.0.1")</span><br><span class="line">  -p PORT, --port=PORT  Port of the the REST-JSON API server (default 8775)</span><br><span class="line">  --adapter=ADAPTER     Server (bottle) adapter to use (default "wsgiref")</span><br><span class="line">  --username=USERNAME   Basic authentication username (optional)</span><br><span class="line">  --password=PASSWORD   Basic authentication password (optional)</span><br></pre></td></tr></table></figure>
+<p>最近要写一个批量工具，然后就要用到sqlmap的api，顺手总结一下自己用的。</p>
 <a id="more"></a>
+<h2 id="help"><a href="#help" class="headerlink" title="-help"></a>-help</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> python sqlmapapi.py --<span class="built_in">help</span></span></span><br><span class="line"></span><br><span class="line">Usage: sqlmapapi.py [options]</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  -h, --help            show this help message and exit</span><br><span class="line">  -s, --server          Run as a REST-JSON API server</span><br><span class="line">  -c, --client          Run as a REST-JSON API client</span><br><span class="line">  -H HOST, --host=HOST  Host of the REST-JSON API server (default "127.0.0.1")</span><br><span class="line">  -p PORT, --port=PORT  Port of the the REST-JSON API server (default 8775)</span><br><span class="line">  --adapter=ADAPTER     Server (bottle) adapter to use (default "wsgiref")</span><br><span class="line">  --username=USERNAME   Basic authentication username (optional)</span><br><span class="line">  --password=PASSWORD   Basic authentication password (optional)</span><br></pre></td></tr></table></figure>
 <h2 id="启动-sqlmapapi-server"><a href="#启动-sqlmapapi-server" class="headerlink" title="启动 sqlmapapi server"></a>启动 sqlmapapi server</h2><p>需要使用 - s 参数让 sqlmapapi 以 server 模式运行</p>
 <p>或者指定 - H 和 - P 参数</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> python sqlmapapi.py -s</span></span><br><span class="line"></span><br><span class="line">[13:48:59] [INFO] Running REST-JSON API server at '127.0.0.1:8775'..</span><br><span class="line">[13:48:59] [INFO] Admin (secret) token: 772a261d52b21c2810713104ddfaf3f0</span><br><span class="line">[13:48:59] [DEBUG] IPC database: '\Temp\sqlmapipc-33dj9q6p'</span><br><span class="line">[13:48:59] [DEBUG] REST-JSON API server connected to IPC database</span><br><span class="line">[13:48:59] [DEBUG] Using adapter 'wsgiref' to run bottle</span><br></pre></td></tr></table></figure>
@@ -501,7 +502,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -523,7 +524,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

